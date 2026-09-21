@@ -1,0 +1,51 @@
+{
+  "id": "./",
+  "name": "Áustria + Londres 2026–2027",
+  "short_name": "Áustria + Londres",
+  "description": "Roteiro de viagem mobile-first para Áustria e Londres, com agenda, mapas, reservas e orçamento.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#214d3d",
+  "orientation": "any",
+  "lang": "pt-BR",
+  "categories": [
+    "travel",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Hoje",
+      "short_name": "Hoje",
+      "url": "./#roteiro",
+      "icons": [
+        {
+          "src": "./icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Reservas",
+      "short_name": "Reservas",
+      "url": "./#reservas",
+      "icons": [
+        {
+          "src": "./icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
