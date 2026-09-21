@@ -1,4 +1,4 @@
-const CACHE_NAME="austria-londres-pwa-v5.1";
+const CACHE_NAME="austria-londres-pwa-v5.2";
 const SHELL=["./","./index.html","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png"];
 
 self.addEventListener("install", event => {
