@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="#214d3d" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="Áustria + Londres" name="apple-mobile-web-app-title"/>
-<title>Áustria + Londres | Roteiro 2026–2027</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="theme-color" content="#214d3d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Áustria + Londres">
+<title>Áustria + Londres | Roteiro 2026–2027 · V5.1</title>
 <style>
 :root {
   --bg:#f5f1e8; --paper:#fffdf8; --ink:#1e2a24; --muted:#6b746f;
@@ -201,12 +203,25 @@ button,a,input{touch-action:manipulation}
   .budget-table td:nth-child(4){grid-column:1/2;font-size:11px;color:var(--muted);line-height:1.3}
   .budget-input{width:104px;font-size:16px;padding:9px}
 
-  .mobile-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,253,248,.97);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:7px 8px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(47,45,39,.10)}
+  .mobile-bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,253,248,.97);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:7px 8px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(47,45,39,.10)}
   .mobile-nav-btn{border:0;background:transparent;color:var(--muted);min-height:48px;border-radius:12px;font-size:10px;font-weight:800;cursor:pointer}
   .mobile-nav-btn span{display:block;font-size:20px;line-height:22px;margin-bottom:2px}
   .mobile-nav-btn.active{background:#edf2ee;color:var(--green)}
   .footer{margin-bottom:20px}
 }
+
+
+.flight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 22px}
+.flight-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}
+.flight-card.recommended{border:2px solid var(--green);position:relative}
+.flight-card h3{margin:0 0 8px;color:var(--green);font-family:Georgia,serif}
+.flight-card .flight-time{font-size:20px;font-weight:900;color:var(--ink);margin:8px 0}
+.flight-card .flight-meta{color:var(--muted);font-size:13px;margin:6px 0}
+.flight-card .price-ref{background:#f1eadf;border-radius:12px;padding:10px 12px;margin:12px 0;font-size:13px}
+.badge{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;background:#edf2ee;color:var(--green);margin-bottom:8px}
+.badge.wine{background:#f6e9ec;color:var(--wine)}
+.budget-goal{background:#fff7e8;border:1px solid #ead4ac;border-radius:16px;padding:13px 15px;margin:12px 0 16px;color:#5f4b2d}
+@media(max-width:760px){.flight-grid{grid-template-columns:1fr}.flight-card{padding:15px}.flight-card .flight-time{font-size:18px}}
 
 @media print{
   .nav,.hero-actions,.daychips{display:none!important}
@@ -215,183 +230,779 @@ button,a,input{touch-action:manipulation}
   .day-card,.card,.budget-wrap{box-shadow:none;break-inside:avoid}
   a{text-decoration:none}
 }
-
-
-/* ===== PWA install/update layer ===== */
-.pwa-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;color:var(--muted);font-size:12px}
-.status-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:rgba(255,253,248,.85);border:1px solid var(--line);font-weight:800}
-.status-dot{width:8px;height:8px;border-radius:50%;background:#4f9c68;box-shadow:0 0 0 3px rgba(79,156,104,.14)}
-.status-badge.offline .status-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(179,138,77,.16)}
-#installAppBtn{display:none}
-.update-toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;width:min(92vw,520px);background:#17382d;color:#fff;border-radius:18px;padding:13px 14px;box-shadow:0 18px 48px rgba(0,0,0,.24);display:none;align-items:center;justify-content:space-between;gap:10px}
-.update-toast.show{display:flex}.update-toast b{font-size:13px}.update-toast button{border:0;border-radius:999px;padding:9px 12px;background:#fff;color:#17382d;font-weight:900;cursor:pointer;white-space:nowrap}
-.install-modal{position:fixed;inset:0;z-index:100;display:none;background:rgba(21,32,27,.55);backdrop-filter:blur(6px);padding:20px;align-items:end;justify-content:center}
-.install-modal.show{display:flex}.install-sheet{width:min(100%,520px);background:var(--paper);border-radius:24px 24px 18px 18px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.28)}
-.install-sheet h3{margin:0 0 8px;color:var(--green);font-family:Georgia,serif;font-size:24px}.install-sheet p{margin:6px 0;color:var(--muted)}
-.install-steps{margin:14px 0;padding-left:20px}.install-steps li{margin:8px 0}.install-sheet .close-install{width:100%;margin-top:8px}
-@media(max-width:700px){
-  .hero-actions .btn{flex:1 1 calc(50% - 6px);min-height:46px}
-  #installAppBtn{display:inline-flex;justify-content:center;align-items:center}
-  .pwa-meta{margin-top:12px}
-}
-@media(display-mode:standalone){#installAppBtn{display:none}.hero{padding-top:max(24px,env(safe-area-inset-top))}}
 </style>
-<link href="./manifest.webmanifest" rel="manifest"/><link href="./icons/apple-touch-icon.png" rel="apple-touch-icon"/><link href="./icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/></head>
+<link rel="manifest" href="./manifest.webmanifest"/>
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png"/>
+</head>
 <body>
 <div class="container">
-<header class="hero">
-<div class="eyebrow">18 DE DEZEMBRO DE 2026 → 04 DE JANEIRO DE 2027</div>
-<h1>Áustria + Londres</h1>
-<p>Roteiro interativo do casal: Salzburg e os Alpes, lagos do Salzkammergut, Natal e ópera em Viena, Harry Potter, West End e Réveillon em Londres.</p><div class="pwa-meta"><span class="status-badge" id="connectionBadge"><span class="status-dot"></span><span id="connectionText">Online</span></span><span class="status-badge">📦 Offline pronto</span><span class="status-badge" id="versionBadge">Versão —</span></div>
-<div class="hero-actions">
-<button class="btn" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
-<button class="btn secondary" onclick="document.querySelector('[data-tab=reservas]').click()">✅ Ver reservas</button>
-<button class="btn secondary" onclick="document.querySelector('[data-tab=orcamento]').click()">💰 Ver orçamento</button>
-<button class="btn secondary" id="installAppBtn" type="button">📲 Instalar app</button></div>
-<div class="kpis">
-<div class="kpi"><b>15</b><span>noites</span></div>
-<div class="kpi"><b>3</b><span>bases principais</span></div>
-<div class="kpi"><b>2</b><span>dias de carro nos Alpes</span></div>
-<div class="kpi"><b>3</b><span>grandes eventos / teatros</span></div>
-<div class="kpi"><b>30/12</b><span>dia protegido para trabalho</span></div>
+  <header class="hero">
+    <div class="eyebrow">V5.1 · 18 DE DEZEMBRO DE 2026 → 03 DE JANEIRO DE 2027</div>
+    <h1>Áustria + Londres</h1>
+    <p>Roteiro interativo do casal: Salzburg e os Alpes, lagos do Salzkammergut, Natal e ópera em Viena, Harry Potter, West End e Réveillon em Londres.</p>
+    <div class="hero-actions">
+      <button class="btn" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+      <button class="btn secondary" onclick="document.querySelector('[data-tab=reservas]').click()">✅ Ver reservas</button>
+      <button class="btn secondary" onclick="document.querySelector('[data-tab=orcamento]').click()">💰 Ver orçamento</button>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>14</b><span>noites</span></div>
+      <div class="kpi"><b>3</b><span>bases principais</span></div>
+      <div class="kpi"><b>2</b><span>dias de carro nos Alpes</span></div>
+      <div class="kpi"><b>R$50k</b><span>meta total do casal</span></div>
+      <div class="kpi"><b>30/12</b><span>dia protegido para trabalho</span></div>
+    </div>
+    <div class="budget-goal" style="max-width:900px"><b>Orçamento V5:</b> total-base ~<b>R$47,5 mil</b> · com 4% de contingência ~<b>R$49,4 mil</b>. A provisão de voos internacionais já foi elevada para <b>R$15 mil</b>.</div>
+  </header>
+
+  <div class="nav">
+    <div class="tabs">
+      <button class="tab active" data-tab="roteiro">🗓️ Roteiro</button>
+      <button class="tab" data-tab="voos">✈️ Voos</button>
+      <button class="tab" data-tab="reservas">✅ Reservas</button>
+      <button class="tab" data-tab="orcamento">💰 Orçamento</button>
+      <button class="tab" data-tab="mapas">📍 Mapas</button>
+    </div>
+  </div>
+
+  <section class="panel active" id="roteiro">
+    <h2 class="section-title">Visão geral</h2>
+    <p class="section-sub">Três bases, poucos check-ins e dias alpinos flexíveis conforme meteorologia.</p>
+    <div class="route">
+      <div class="route-card"><h3>🇦🇹 Salzburg · 19–23/12</h3><p>Natal, Fortaleza, Kitzsteinhorn, Zell am See, Wolfgangsee, Hallstatt e Gosausee.</p></div>
+      <div class="route-card"><h3>🇦🇹 Viena · 23–27/12</h3><p>Mercados, Schönbrunn, Natal, Belvedere e ópera na Staatsoper.</p></div>
+      <div class="route-card"><h3>🇬🇧 Londres · 27/12–02/01</h3><p>Harry Potter Studios, dois espetáculos no West End, trabalho protegido, Réveillon e retorno em 02/01.</p></div>
+    </div>
+    <h2 class="section-title">Dia a dia</h2>
+    <div class="mobile-toolbar" aria-label="Navegação do dia">
+      <div class="mobile-day-summary"><small id="mobileDate">—</small><b id="mobileTitle">Selecione um dia</b></div>
+      <button class="mini-btn today" id="todayBtn" type="button">Hoje</button>
+      <div style="display:flex;gap:6px"><button class="mini-btn" id="prevDay" type="button" aria-label="Dia anterior">‹</button><button class="mini-btn" id="nextDay" type="button" aria-label="Próximo dia">›</button></div>
+    </div>
+    <div class="daychips"><button class='daychip' data-target='day-0'><b>18/12</b><span>São Paulo → Munique</span></button><button class='daychip' data-target='day-1'><b>19/12</b><span>Munique → Salzburg</span></button><button class='daychip' data-target='day-2'><b>20/12</b><span>Salzburg</span></button><button class='daychip' data-target='day-3'><b>21/12</b><span>Kitzsteinhorn + Zell am See</span></button><button class='daychip' data-target='day-4'><b>22/12</b><span>Wolfgangsee + Hallstatt + Gosausee</span></button><button class='daychip' data-target='day-5'><b>23/12</b><span>Salzburg → Viena</span></button><button class='daychip' data-target='day-6'><b>24/12</b><span>Viena</span></button><button class='daychip' data-target='day-7'><b>25/12</b><span>Viena</span></button><button class='daychip' data-target='day-8'><b>26/12</b><span>Viena</span></button><button class='daychip' data-target='day-9'><b>27/12</b><span>Viena → Londres</span></button><button class='daychip' data-target='day-10'><b>28/12</b><span>Les Misérables</span></button><button class='daychip' data-target='day-11'><b>29/12</b><span>Harry Potter Studios</span></button><button class='daychip' data-target='day-12'><b>30/12</b><span>Londres</span></button><button class='daychip' data-target='day-13'><b>31/12</b><span>Londres</span></button><button class='daychip' data-target='day-14'><b>01/01</b><span>Cursed Child</span></button><button class='daychip' data-target='day-15'><b>02/01</b><span>Londres → São Paulo</span></button><button class='daychip' data-target='day-16'><b>03/01</b><span>Chegada em São Paulo</span></button></div>
+    
+    <article class="day-card" id="day-0" data-day="0">
+      <div class="day-head">
+        <div class="date-box"><span>18/12</span><small>Sex</small></div>
+        <div class="day-title">
+          <h3>✈️ São Paulo → Munique</h3>
+          <span class="pill">Voo internacional</span>
+          <p>Saída do Brasil no voo noturno.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>Dia</td><td><strong>Trabalho normal</strong><div>Manter o dia 18/12 livre para o expediente; malas já prontas na véspera.</div></td></tr><tr><td class='time'>Após expediente</td><td><strong>Saída para GRU</strong><div>Ir ao aeroporto assim que encerrarem o trabalho. Objetivo: estar no Terminal 3 por volta de 19:30–20:00.</div></td></tr><tr><td class='time'>22:25</td><td><strong>Lufthansa LH505 · GRU → MUC</strong><div>Opção-base e preferida: voo direto noturno, chegada em Munique às 13:50 de 19/12.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=GRU+Airport+Sao+Paulo'>📍 GRU</a></div>
+          <h4>Nota</h4>
+          <p>Reservar como multidestinos/open jaw: GRU → MUC e LHR → GRU.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-1" data-day="1">
+      <div class="day-head">
+        <div class="date-box"><span>19/12</span><small>Sáb</small></div>
+        <div class="day-title">
+          <h3>🚆 Munique → Salzburg</h3>
+          <span class="pill">Chegada à Europa</span>
+          <p>Chegada em Munique e conexão ferroviária direta para Salzburg.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>13:50</td><td><strong>Chegada em MUC</strong><div>Imigração, bagagens e deslocamento até a estação do aeroporto.</div></td></tr><tr><td class='time'>15:30</td><td><strong>Trem MUC → Salzburg</strong><div>Prever 2h20–2h45, normalmente com 1 troca.</div></td></tr><tr><td class='time'>18:15</td><td><strong>Check-in em Salzburg</strong><div>Base sugerida: Mirabell / Neustadt.</div></td></tr><tr><td class='time'>19:15</td><td><strong>Primeiro passeio natalino</strong><div>Mirabell → Getreidegasse → Domplatz → Residenzplatz.</div></td></tr><tr><td class='time'>20:30</td><td><strong>Jantar</strong><div>Centro histórico / mercado de Natal.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Munich+Airport&destination=Salzburg+Hbf&travelmode=transit'>📍 MUC → Salzburg</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Mirabellplatz,+Salzburg&destination=Salzburg+Cathedral&waypoints=Makartsteg,+Salzburg%7CGetreidegasse,+Salzburg&travelmode=walking'>📍 Passeio Salzburg</a></div>
+          <h4>Nota</h4>
+          <p>Dia leve para absorver jet lag. Não colocar atrações com hora marcada.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-2" data-day="2">
+      <div class="day-head">
+        <div class="date-box"><span>20/12</span><small>Dom</small></div>
+        <div class="day-title">
+          <h3>🎄 Salzburg</h3>
+          <span class="pill">Cidade + Natal</span>
+          <p>Centro histórico, Fortaleza Hohensalzburg e mercados de Natal.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>08:30</td><td><strong>Café da manhã</strong><div>Sem pressa.</div></td></tr><tr><td class='time'>09:15</td><td><strong>Funicular / Fortaleza</strong><div>Chegar antes da abertura para evitar filas.</div></td></tr><tr><td class='time'>09:30–12:00</td><td><strong>Fortaleza Hohensalzburg</strong><div>Visita + vistas da cidade e Alpes.</div></td></tr><tr><td class='time'>12:15</td><td><strong>Almoço</strong><div>Altstadt.</div></td></tr><tr><td class='time'>13:30–15:00</td><td><strong>Centro histórico</strong><div>Getreidegasse, Mozartplatz, Catedral e Kapitelplatz.</div></td></tr><tr><td class='time'>15:00</td><td><strong>Coral no mercado</strong><div>Programação natalina.</div></td></tr><tr><td class='time'>16:00</td><td><strong>Salzburger Christkind</strong><div>Aparição prevista no calendário do mercado.</div></td></tr><tr><td class='time'>18:30</td><td><strong>Jantar</strong><div>Centro de Salzburg.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Salzburg+Cathedral&destination=Festung+Hohensalzburg&travelmode=walking'>📍 Centro → Fortaleza</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Getreidegasse,+Salzburg&destination=Kapitelplatz,+Salzburg&waypoints=Mozartplatz,+Salzburg%7CSalzburg+Cathedral&travelmode=walking'>📍 Centro histórico</a></div>
+          <h4>Nota</h4>
+          <p>Dia totalmente a pé. Ideal para sentir Salzburg antes dos dois dias de carro.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-3" data-day="3">
+      <div class="day-head">
+        <div class="date-box"><span>21/12</span><small>Seg</small></div>
+        <div class="day-title">
+          <h3>🏔️ Kitzsteinhorn + Zell am See</h3>
+          <span class="pill">Alpes + lago</span>
+          <p>Primeiro dia de carro: alta montanha, neve e lago alpino.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>07:30</td><td><strong>Café cedo</strong><div>Preparar roupas de frio e mochila leve.</div></td></tr><tr><td class='time'>08:00</td><td><strong>Retirada do carro</strong><div>Compact SUV / station wagon automática.</div></td></tr><tr><td class='time'>08:15</td><td><strong>Salzburg → Kaprun</strong><div>Aprox. 1h30–1h45.</div></td></tr><tr><td class='time'>10:00–12:45</td><td><strong>Kitzsteinhorn</strong><div>Subida panorâmica / TOP OF SALZBURG.</div></td></tr><tr><td class='time'>13:15</td><td><strong>Almoço</strong><div>Kaprun ou Zell am See.</div></td></tr><tr><td class='time'>14:15–16:00</td><td><strong>Zell am See</strong><div>Caminhada pela margem do lago e centro.</div></td></tr><tr><td class='time'>16:00</td><td><strong>Retorno a Salzburg</strong><div>Chegar com margem para o evento da noite.</div></td></tr><tr><td class='time'>19:00</td><td><strong>Perchtenlauf</strong><div>Tradição alpina no Christkindlmarkt.</div></td></tr><tr><td class='time'>20:15</td><td><strong>Jantar</strong><div>Salzburg.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Salzburg,+Austria&destination=Salzburg,+Austria&waypoints=Kitzsteinhorn,+Kaprun,+Austria%7CZell+am+See,+Austria&travelmode=driving'>📍 Rota completa</a></div>
+          <h4>Nota</h4>
+          <p>Intercambiável com 22/12 conforme previsão do tempo. Priorizar visibilidade no Kitzsteinhorn.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-4" data-day="4">
+      <div class="day-head">
+        <div class="date-box"><span>22/12</span><small>Ter</small></div>
+        <div class="day-title">
+          <h3>🏞️ Wolfgangsee + Hallstatt + Gosausee</h3>
+          <span class="pill">Lagos + Alpes</span>
+          <p>Dia mais cênico: lagos, vilas alpinas e maciço Dachstein.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>07:30</td><td><strong>Saída de Salzburg</strong><div>Carro.</div></td></tr><tr><td class='time'>08:15–08:50</td><td><strong>St. Gilgen / Wolfgangsee</strong><div>Parada curta para fotos e caminhada.</div></td></tr><tr><td class='time'>09:40</td><td><strong>Chegada a Hallstatt</strong><div>Estacionar fora do centro.</div></td></tr><tr><td class='time'>09:45–10:45</td><td><strong>Skywalk</strong><div>Funicular + mirante, se houver boa visibilidade.</div></td></tr><tr><td class='time'>10:45–12:30</td><td><strong>Hallstatt</strong><div>Vila, margem do lago e mirantes clássicos.</div></td></tr><tr><td class='time'>12:30</td><td><strong>Almoço</strong><div>Hallstatt ou arredores.</div></td></tr><tr><td class='time'>13:30</td><td><strong>Hallstatt → Gosausee</strong><div>Aprox. 30 min.</div></td></tr><tr><td class='time'>14:00–15:30</td><td><strong>Gosausee</strong><div>Lago + vista para o Dachstein.</div></td></tr><tr><td class='time'>15:30</td><td><strong>Retorno a Salzburg</strong><div>Devolução do carro no fim da tarde.</div></td></tr><tr><td class='time'>19:00</td><td><strong>Jantar</strong><div>Noite livre em Salzburg.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Salzburg,+Austria&destination=Salzburg,+Austria&waypoints=St.+Gilgen,+Austria%7CHallstatt,+Austria%7CVorderer+Gosausee,+Austria&travelmode=driving'>📍 Rota completa</a></div>
+          <h4>Nota</h4>
+          <p>Se o tempo piorar, priorizar Hallstatt + Gosausee e cortar St. Gilgen.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-5" data-day="5">
+      <div class="day-head">
+        <div class="date-box"><span>23/12</span><small>Qua</small></div>
+        <div class="day-title">
+          <h3>🚆 Salzburg → Viena</h3>
+          <span class="pill">Trem + mercados</span>
+          <p>Última manhã em Salzburg e chegada a Viena ainda com mercados pré-Natal.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>08:30</td><td><strong>Café</strong><div>Check-out parcial / malas prontas.</div></td></tr><tr><td class='time'>09:30–11:30</td><td><strong>Último passeio em Salzburg</strong><div>Compras, café, centro histórico.</div></td></tr><tr><td class='time'>11:45</td><td><strong>Almoço cedo</strong><div>Próximo ao hotel/estação.</div></td></tr><tr><td class='time'>13:00</td><td><strong>Railjet Salzburg → Viena</strong><div>Chegada prevista 15:30–16:00.</div></td></tr><tr><td class='time'>16:15</td><td><strong>Check-in</strong><div>Base sugerida: Innere Stadt / Karlsplatz / Staatsoper.</div></td></tr><tr><td class='time'>17:00–20:30</td><td><strong>Mercados de Natal</strong><div>Freyung, Am Hof, Rathaus e/ou Spittelberg.</div></td></tr><tr><td class='time'>20:45</td><td><strong>Jantar</strong><div>Centro de Viena.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Salzburg+Hbf&destination=Wien+Hauptbahnhof&travelmode=transit'>📍 Salzburg Hbf → Wien Hbf</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Freyung,+Vienna&destination=Rathausplatz,+Vienna&waypoints=Am+Hof,+Vienna&travelmode=walking'>📍 Circuito de mercados</a></div>
+          <h4>Nota</h4>
+          <p>Chegar dia 23 permite ver mercados menores que encerram antes do Natal.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-6" data-day="6">
+      <div class="day-head">
+        <div class="date-box"><span>24/12</span><small>Qui</small></div>
+        <div class="day-title">
+          <h3>🎁 Viena</h3>
+          <span class="pill">Véspera de Natal</span>
+          <p>Schönbrunn pela manhã, centro histórico e jantar especial.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>08:00</td><td><strong>Café da manhã</strong><div>Saída cedo.</div></td></tr><tr><td class='time'>08:45</td><td><strong>Chegada a Schönbrunn</strong><div>Evitar filas.</div></td></tr><tr><td class='time'>09:00–10:30</td><td><strong>Palácio de Schönbrunn</strong><div>Palace Ticket.</div></td></tr><tr><td class='time'>10:30–12:15</td><td><strong>Mercado de Schönbrunn</strong><div>Aproveitar antes do encerramento antecipado.</div></td></tr><tr><td class='time'>13:30</td><td><strong>Almoço</strong><div>Centro de Viena.</div></td></tr><tr><td class='time'>15:00</td><td><strong>Stephansdom + Stephansplatz</strong><div>Passeio leve.</div></td></tr><tr><td class='time'>16:15</td><td><strong>Rathausplatz</strong><div>Último giro natalino do dia.</div></td></tr><tr><td class='time'>17:30</td><td><strong>Hotel</strong><div>Descanso e preparação.</div></td></tr><tr><td class='time'>19:30</td><td><strong>Jantar de Véspera</strong><div>Reserva obrigatória.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Vienna+State+Opera&destination=Schloss+Sch%C3%B6nbrunn,+Vienna&travelmode=transit'>📍 Hotel/centro → Schönbrunn</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=St.+Stephen%27s+Cathedral,+Vienna&destination=Rathausplatz,+Vienna&travelmode=walking'>📍 Centro histórico</a></div>
+          <h4>Nota</h4>
+          <p>Programação propositalmente leve no fim da tarde.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-7" data-day="7">
+      <div class="day-head">
+        <div class="date-box"><span>25/12</span><small>Sex</small></div>
+        <div class="day-title">
+          <h3>🎭 Viena</h3>
+          <span class="pill">Natal + Ópera</span>
+          <p>Natal tranquilo e noite especial na Wiener Staatsoper.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>09:30</td><td><strong>Café tardio</strong><div>Ritmo leve.</div></td></tr><tr><td class='time'>10:30–12:30</td><td><strong>Innere Stadt</strong><div>Passeio pelas ruas centrais.</div></td></tr><tr><td class='time'>12:45</td><td><strong>Almoço</strong><div>Reserva recomendada.</div></td></tr><tr><td class='time'>14:00–16:30</td><td><strong>Cafés / centro / Rathaus</strong><div>Programa flexível.</div></td></tr><tr><td class='time'>16:30</td><td><strong>Hotel</strong><div>Descanso e preparação.</div></td></tr><tr><td class='time'>18:15</td><td><strong>Saída para a Staatsoper</strong><div>Chegar com antecedência.</div></td></tr><tr><td class='time'>19:00–21:30</td><td><strong>Les Pêcheurs de perles</strong><div>Wiener Staatsoper.</div></td></tr><tr><td class='time'>22:00</td><td><strong>Drink ou jantar leve</strong><div>Pós-ópera.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=Vienna+State+Opera'>📍 Staatsoper</a></div>
+          <h4>Nota</h4>
+          <p>Evento-âncora da viagem. Priorizar bons assentos.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-8" data-day="8">
+      <div class="day-head">
+        <div class="date-box"><span>26/12</span><small>Sáb</small></div>
+        <div class="day-title">
+          <h3>🖼️ Viena</h3>
+          <span class="pill">Arte + cafés</span>
+          <p>Último dia completo na Áustria: Belvedere, Hofburg e cafés clássicos.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>09:00</td><td><strong>Café</strong><div>Saída tranquila.</div></td></tr><tr><td class='time'>09:30–11:45</td><td><strong>Upper Belvedere</strong><div>Coleção + Klimt.</div></td></tr><tr><td class='time'>12:15</td><td><strong>Almoço</strong><div>Centro.</div></td></tr><tr><td class='time'>13:30–15:30</td><td><strong>Hofburg / Ringstrasse</strong><div>Passeio cultural.</div></td></tr><tr><td class='time'>15:30</td><td><strong>Café vienense</strong><div>Tempo reservado de verdade.</div></td></tr><tr><td class='time'>17:00–19:00</td><td><strong>Último mercado de Natal</strong><div>Rathaus / Stephansplatz.</div></td></tr><tr><td class='time'>19:30</td><td><strong>Jantar</strong><div>Última noite na Áustria.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Vienna+State+Opera&destination=Upper+Belvedere,+Vienna&travelmode=transit'>📍 Belvedere</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=Hofburg+Vienna'>📍 Hofburg</a></div>
+          <h4>Nota</h4>
+          <p>Não antecipar Londres para 26/12: vale mais preservar este dia em Viena.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-9" data-day="9">
+      <div class="day-head">
+        <div class="date-box"><span>27/12</span><small>Dom</small></div>
+        <div class="day-title">
+          <h3>✈️ Viena → Londres</h3>
+          <span class="pill">Voo interno</span>
+          <p>Voo direto para Heathrow e primeira tarde/noite em Londres.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>06:45</td><td><strong>Café + check-out</strong><div>Malas prontas.</div></td></tr><tr><td class='time'>07:20</td><td><strong>Saída para VIE</strong><div>Táxi/transfer.</div></td></tr><tr><td class='time'>09:55</td><td><strong>VIE → LHR</strong><div>Opção-base: Austrian OS333.</div></td></tr><tr><td class='time'>11:25</td><td><strong>Chegada em Heathrow</strong><div>Imigração e malas.</div></td></tr><tr><td class='time'>13:30</td><td><strong>Check-in em Londres</strong><div>Base sugerida: Bloomsbury / Tottenham Court Road.</div></td></tr><tr><td class='time'>15:30–18:30</td><td><strong>Covent Garden + Soho + Regent Street</strong><div>Passeio leve.</div></td></tr><tr><td class='time'>19:30</td><td><strong>Jantar</strong><div>Sem reserva rígida.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=Vienna+International+Airport'>📍 VIE</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Heathrow+Airport&destination=Tottenham+Court+Road,+London&travelmode=transit'>📍 LHR → Bloomsbury</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Covent+Garden,+London&destination=Piccadilly+Circus,+London&waypoints=Seven+Dials,+London%7CSoho,+London%7CRegent+Street,+London&travelmode=walking'>📍 Passeio central</a></div>
+          <h4>Nota</h4>
+          <p>Nada com ingresso nesse dia.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-10" data-day="10">
+      <div class="day-head">
+        <div class="date-box"><span>28/12</span><small>Seg</small></div>
+        <div class="day-title">
+          <h3>🎭 Londres + Les Misérables</h3>
+          <span class="pill">West End · 19h30</span>
+          <p>Dia central e flexível no bank holiday; teatro à noite, sem deslocamento para fora de Londres.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody>
+            <tr><td class="time">09:30</td><td><strong>Café sem pressa</strong><div>Primeira manhã completa em Londres.</div></td></tr>
+            <tr><td class="time">10:30–13:00</td><td><strong>Westminster + St James's</strong><div>Big Ben, Parliament, St James's Park e arredores.</div></td></tr>
+            <tr><td class="time">13:15</td><td><strong>Almoço</strong><div>Região de Soho / Covent Garden.</div></td></tr>
+            <tr><td class="time">14:30–17:00</td><td><strong>Covent Garden + Regent Street</strong><div>Passeio, cafés e luzes de Natal.</div></td></tr>
+            <tr><td class="time">17:00–18:00</td><td><strong>Hotel / descanso</strong><div>Trocar de roupa e sair sem correria.</div></td></tr>
+            <tr><td class="time">18:15</td><td><strong>Jantar leve</strong><div>Próximo ao Sondheim Theatre.</div></td></tr>
+            <tr><td class="time">19:30–~22:20</td><td><strong>Les Misérables</strong><div>Sondheim Theatre · sessão noturna.</div></td></tr>
+          </tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class="mapbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Westminster,+London&destination=Sondheim+Theatre,+London&waypoints=St+James%27s+Park,+London%7CCovent+Garden,+London&travelmode=walking">📍 Dia central → Sondheim</a></div>
+          <h4>Por que aqui?</h4>
+          <p>28/12 é o bank holiday substituto. Mantemos o dia dentro de Londres e deixamos o deslocamento a Watford para 29/12.</p>
+        </aside>
+      </div>
+    </article>
+
+    <article class="day-card" id="day-11" data-day="11">
+      <div class="day-head">
+        <div class="date-box"><span>29/12</span><small>Ter</small></div>
+        <div class="day-title">
+          <h3>⚡ Harry Potter Studios</h3>
+          <span class="pill">Hogwarts in the Snow</span>
+          <p>Dia dedicado ao Warner Bros. Studio Tour, agora fora do bank holiday.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody>
+            <tr><td class="time">08:00</td><td><strong>Saída do hotel</strong><div>Euston → Watford Junction.</div></td></tr>
+            <tr><td class="time">09:15</td><td><strong>Shuttle oficial</strong><div>Watford Junction → Studio.</div></td></tr>
+            <tr><td class="time">10:00–15:30</td><td><strong>Warner Bros. Studio Tour</strong><div>The Making of Harry Potter · Hogwarts in the Snow.</div></td></tr>
+            <tr><td class="time">15:30–17:30</td><td><strong>Retorno ao centro</strong><div>Sem compromisso noturno rígido.</div></td></tr>
+            <tr><td class="time">19:00</td><td><strong>Jantar</strong><div>Noite livre para descansar.</div></td></tr>
+          </tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/dir/?api=1&origin=Tottenham+Court+Road,+London&destination=Watford+Junction&travelmode=transit'>📍 Hotel → Watford Junction</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=Warner+Bros.+Studio+Tour+London'>📍 Studio Tour</a></div>
+          <h4>Estratégia</h4>
+          <p>Ao mover o Studio para 29/12, reduzimos o risco de alterações de transporte ligadas ao bank holiday de 28/12.</p>
+        </aside>
+      </div>
+    </article>
+
+    <article class="day-card" id="day-12" data-day="12">
+      <div class="day-head">
+        <div class="date-box"><span>30/12</span><small>Qua</small></div>
+        <div class="day-title">
+          <h3>💻 Londres</h3>
+          <span class="pill">Dia de trabalho</span>
+          <p>Dia protegido para trabalho da Maynara.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>08:30</td><td><strong>Café</strong><div>Sem pressa.</div></td></tr><tr><td class='time'>10:00–11:30</td><td><strong>Caminhada curta / preparação</strong><div>Nada com reserva.</div></td></tr><tr><td class='time'>12:00–21:00</td><td><strong>Trabalho</strong><div>Janela equivalente a 09h–18h em São Paulo.</div></td></tr><tr><td class='time'>21:15</td><td><strong>Jantar próximo ao hotel</strong><div>Leve e flexível.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=British+Museum'>📍 British Museum (opcional)</a></div>
+          <h4>Nota</h4>
+          <p>Hotel deve ter Wi‑Fi forte, mesa boa e ambiente silencioso.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-13" data-day="13">
+      <div class="day-head">
+        <div class="date-box"><span>31/12</span><small>Qui</small></div>
+        <div class="day-title">
+          <h3>🎆 Londres</h3>
+          <span class="pill">Réveillon</span>
+          <p>Dia leve e noite dos fogos oficiais de Londres.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody><tr><td class='time'>09:30</td><td><strong>Café</strong><div>Começar tarde.</div></td></tr><tr><td class='time'>11:00–13:30</td><td><strong>Hyde Park / Mayfair / Notting Hill</strong><div>Passeio leve.</div></td></tr><tr><td class='time'>14:00</td><td><strong>Almoço</strong><div>Reserva recomendada.</div></td></tr><tr><td class='time'>15:00–17:00</td><td><strong>Hotel</strong><div>Descanso.</div></td></tr><tr><td class='time'>17:30</td><td><strong>Jantar cedo</strong><div>Reserva obrigatória.</div></td></tr><tr><td class='time'>Noite</td><td><strong>Acesso ao setor dos fogos</strong><div>Seguir horário específico do ingresso.</div></td></tr><tr><td class='time'>00:00</td><td><strong>Fogos de Ano-Novo</strong><div>Thames / London Eye.</div></td></tr></tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=London+Eye'>📍 London Eye / Réveillon</a></div>
+          <h4>Nota</h4>
+          <p>Comprar ingresso oficial assim que o lote 2026 abrir.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-14" data-day="14">
+      <div class="day-head">
+        <div class="date-box"><span>01/01</span><small>Sex</small></div>
+        <div class="day-title">
+          <h3>⚡ Ano-Novo + Cursed Child</h3>
+          <span class="pill">Palace Theatre · 17h00</span>
+          <p>Manhã lenta depois do Réveillon e Harry Potter no fim da tarde — em dia separado de Les Misérables.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody>
+            <tr><td class="time">11:00</td><td><strong>Brunch</strong><div>Sem compromisso cedo depois do Réveillon.</div></td></tr>
+            <tr><td class="time">12:30–14:30</td><td><strong>Parade · opcional</strong><div>Assistir apenas uma parte da London New Year’s Day Parade, preferencialmente em Piccadilly.</div></td></tr>
+            <tr><td class="time">14:30–15:45</td><td><strong>Café / descanso</strong><div>Ir com calma para o West End.</div></td></tr>
+            <tr><td class="time">16:15</td><td><strong>Chegada ao Palace Theatre</strong><div>Margem confortável para entrada.</div></td></tr>
+            <tr><td class="time">17:00–~19:55</td><td><strong>Harry Potter and the Cursed Child</strong><div>One Part Show.</div></td></tr>
+            <tr><td class="time">20:15</td><td><strong>Jantar</strong><div>Soho / Chinatown / Covent Garden.</div></td></tr>
+          </tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapas</h4>
+          <div class="maplinks"><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=Piccadilly+London'>📍 Parade / Piccadilly</a><a class='mapbtn' target='_blank' rel='noopener' href='https://www.google.com/maps/search/?api=1&query=Palace+Theatre+London'>📍 Palace Theatre</a></div>
+          <h4>Ritmo</h4>
+          <p>A Parade passa a ser opcional e parcial. O foco do dia é recuperar do Réveillon e chegar bem ao teatro.</p>
+        </aside>
+      </div>
+    </article>
+
+    <article class="day-card" id="day-15" data-day="15">
+      <div class="day-head">
+        <div class="date-box"><span>02/01</span><small>Sáb</small></div>
+        <div class="day-title">
+          <h3>✈️ Londres → São Paulo</h3>
+          <span class="pill">Retorno · saída em 02/01</span>
+          <p>Últimas horas em Londres e voo noturno para garantir chegada em São Paulo em 03/01.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody>
+            <tr><td class="time">09:00</td><td><strong>Café</strong><div>Última manhã em Londres.</div></td></tr>
+            <tr><td class="time">10:00</td><td><strong>Check-out</strong><div>Deixar as malas no hotel.</div></td></tr>
+            <tr><td class="time">10:30–13:30</td><td><strong>Último passeio</strong><div>Covent Garden, Soho, compras ou Borough Market conforme preferência.</div></td></tr>
+            <tr><td class="time">13:30</td><td><strong>Almoço</strong><div>Sem pressa, mas perto do hotel.</div></td></tr>
+            <tr><td class="time">15:30</td><td><strong>Retirar malas</strong><div>Preparar saída para Heathrow.</div></td></tr>
+            <tr><td class="time">16:15</td><td><strong>Centro → Heathrow</strong><div>Elizabeth Line ou transfer.</div></td></tr>
+            <tr><td class="time">~17:15</td><td><strong>Chegada a LHR</strong><div>Margem confortável para voo internacional.</div></td></tr>
+            <tr><td class="time">20:15</td><td><strong>Opção 1: LATAM LA8085</strong><div>LHR → GRU direto · chegada 03/01 às 05:00.</div></td></tr>
+            <tr><td class="time">21:15</td><td><strong>Opção 2: British Airways BA247</strong><div>LHR → GRU direto · chegada 03/01 às 06:00.</div></td></tr>
+          </tbody></table>
+        </div>
+        <aside class="day-aside">
+          <h4>Mapa</h4>
+          <div class="maplinks"><a class="mapbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Tottenham+Court+Road,+London&destination=Heathrow+Airport&travelmode=transit">📍 Centro → Heathrow</a></div>
+          <h4>Preferência</h4>
+          <p>LATAM é ligeiramente melhor pelo horário: sai uma hora antes e chega às 05:00.</p>
+        </aside>
+      </div>
+    </article>
+    
+
+    <article class="day-card" id="day-16" data-day="16">
+      <div class="day-head">
+        <div class="date-box"><span>03/01</span><small>Dom</small></div>
+        <div class="day-title">
+          <h3>🏠 Chegada em São Paulo</h3>
+          <span class="pill">Fim da viagem</span>
+          <p>Chegada em GRU no início da manhã.</p>
+        </div>
+      </div>
+      <div class="day-grid">
+        <div>
+          <table class="schedule"><tbody>
+            <tr><td class="time">05:00</td><td><strong>LATAM LA8085</strong><div>Chegada prevista em GRU se escolhida a opção LATAM.</div></td></tr>
+            <tr><td class="time">06:00</td><td><strong>British Airways BA247</strong><div>Chegada prevista em GRU se escolhida a opção BA.</div></td></tr>
+          </tbody></table>
+        </div>
+        <aside class="day-aside"><h4>Objetivo atendido</h4><p>As duas opções diretas de retorno chegam a São Paulo no próprio dia 03/01.</p></aside>
+      </div>
+    </article>
+    
+  </section>
+
+  
+  <section class="panel" id="voos">
+    <h2 class="section-title">Voos internacionais</h2>
+    <p class="section-sub">Horários revistos para a malha de inverno publicada. Preços abaixo são referências atuais de rota/mês e metas de compra; a tarifa exata do open jaw/multidestinos varia em tempo real e será o principal item a monitorar.</p>
+    <div class="budget-goal"><b>Meta revisada para o casal:</b> como a ida precisa ser noturna após o trabalho, reservamos <b>R$ 15.000</b> para GRU→MUC + LHR→GRU. O roteiro ainda cabe na meta de R$50 mil; <b>R$15,5 mil</b> é o limite aproximado antes de nova otimização.</div>
+
+    <h3 class="section-title" style="font-size:24px">Ida · sexta, 18/12/2026 · somente após o trabalho</h3>
+    <div class="flight-grid">
+      <div class="flight-card recommended">
+        <span class="badge">Opção-base · claramente preferida</span>
+        <h3>Lufthansa · direto</h3>
+        <div class="flight-time">22:25 GRU → 13:50 MUC +1</div>
+        <div class="flight-meta">LH505 · 11h25 · direto · opera na sexta 18/12 no horário sazonal publicado</div>
+        <div class="price-ref"><b>Referência de tarifa:</b> a Lufthansa publica dezembro na rota GRU–MUC a partir de ~R$5.997 por pessoa ida e volta, mas 18/12 é pico de Natal e nosso bilhete é open jaw.</div>
+        <p><b>É a única opção pesquisada que combina muito bem com um dia normal de trabalho e ainda preserva a tarde/noite de 19/12 em Salzburg.</b></p>
+        <a class="mapbtn" target="_blank" rel="noopener" href="https://www.lufthansa.com/lhg/br/pt/o-d/cy-cy/sao-paulo-munique">Ver Lufthansa</a>
+      </div>
+      <div class="flight-card">
+        <span class="badge wine">Backup se economizar muito</span>
+        <h3>Air France · via Paris</h3>
+        <div class="flight-time">20:40 GRU → 11:50 CDG +1 → 20:20 → 21:55 MUC</div>
+        <div class="flight-meta">AF459 + AF1122 · conexão longa em Paris no sábado 19/12</div>
+        <div class="price-ref"><b>Referência de tarifa:</b> Air France publica dezembro GRU–MUC a partir de ~R$5.297 por pessoa ida e volta.</div>
+        <p>É noturno, mas exige sair para GRU mais cedo e praticamente perde o dia 19. Só vale se a economia for muito relevante frente à Lufthansa.</p>
+        <a class="mapbtn" target="_blank" rel="noopener" href="https://wwws.airfrance.com.br/pt-br/voos-de-sao-paulo-para-munique">Ver Air France</a>
+      </div>
+      <div class="flight-card">
+        <span class="badge wine">Não recomendado para o roteiro atual</span>
+        <h3>TAP · via Lisboa</h3>
+        <div class="flight-time">23:15 GRU → 12:10 LIS +1 → 18:55 → 23:10 MUC</div>
+        <div class="flight-meta">TP88 + TP556 · conexão muito longa em Lisboa</div>
+        <div class="price-ref"><b>Referência de tarifa:</b> TAP publica dezembro GRU–MUC a partir de ~R$7.487 por pessoa ida e volta.</div>
+        <p>Excelente horário de saída depois do trabalho, mas a chegada em Munique é tarde demais para o desenho atual. Manter apenas como referência de preço.</p>
+        <a class="mapbtn" target="_blank" rel="noopener" href="https://www.flytap.com/pt_br/passagens-de-sao-paulo-para-munique">Ver TAP</a>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="font-size:24px">Volta · sábado, 02/01/2027 → chegada 03/01</h3>
+    <div class="flight-grid">
+      <div class="flight-card recommended">
+        <span class="badge">Preferida</span>
+        <h3>LATAM · direto</h3>
+        <div class="flight-time">20:15 LHR → 05:00 GRU +1</div>
+        <div class="flight-meta">LA8085 · 11h45 · diário no horário de inverno</div>
+        <div class="price-ref"><b>Preço:</b> a tarifa exata de 02/01 é dinâmica e precisa ser monitorada. O horário direto de inverno está publicado diariamente; comparar LATAM dentro do bilhete multidestinos antes de comprar separado.</div>
+        <p>Melhor horário para o roteiro: ainda permite aproveitar boa parte do dia 02 e chega cedo em São Paulo.</p>
+        <a class="mapbtn" target="_blank" rel="noopener" href="https://www.latamairlines.com/gb/en/destinations/brazil/flights-to-sao-paulo">Ver LATAM</a>
+      </div>
+      <div class="flight-card">
+        <span class="badge">Direta</span>
+        <h3>British Airways · direto</h3>
+        <div class="flight-time">21:15 LHR → 06:00 GRU +1</div>
+        <div class="flight-meta">BA247 · 11h45 · Airbus A350-1000</div>
+        <div class="price-ref"><b>Preço:</b> a tarifa de 02/01 precisa ser comparada no mesmo momento com LATAM e com o open jaw. Horário direto de inverno confirmado no cronograma publicado.</div>
+        <p>Ótimo backup: uma hora a mais de Londres, chegada às 06:00.</p>
+        <a class="mapbtn" target="_blank" rel="noopener" href="https://www.britishairways.com/">Ver British Airways</a>
+      </div>
+      <div class="flight-card">
+        <span class="badge wine">Só se economizar muito</span>
+        <h3>TAP · via Lisboa</h3>
+        <div class="flight-time">08:15 LHR → 11:05 LIS → 23:25 → 06:50 GRU +1</div>
+        <div class="flight-meta">TP1351 + TP87 · conexão longa em Lisboa</div>
+        <div class="price-ref"><b>Referência:</b> TAP mostra janeiro Londres–São Paulo a partir de ~£790 ida e volta em algumas datas.</div>
+        <p>Atende a chegada em 03/01, mas consome praticamente todo o dia 02. Só escolheria com economia material frente aos diretos.</p>
+        <a class="mapbtn" target="_blank" rel="noopener" href="https://www.flytap.com/">Ver TAP</a>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><h3>Combinação que eu tentaria primeiro</h3><p><b>Lufthansa LH505 na ida + LATAM LA8085 ou BA247 na volta.</b> A ida direta às 22h25 passa a valer um prêmio porque é a única que preserva bem o trabalho e o primeiro dia da viagem.</p></div>
+      <div class="card"><h3>Gatilho de compra</h3><p>Excelente para estas restrições: <b>até R$14 mil o casal</b>. Bom: <b>R$14–15 mil</b>. Limite operacional atual: <b>~R$15,5 mil</b> antes de precisarmos reabrir o orçamento.</p></div>
+      <div class="card"><h3>Bagagem</h3><p>Comparar sempre tarifa com bagagem despachada incluída. Uma tarifa aparentemente menor pode perder vantagem ao adicionar duas malas.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" id="reservas">
+    <h2 class="section-title">Reservas prioritárias</h2>
+    <p class="section-sub">O checklist fica salvo neste navegador. Marque conforme cada item for reservado.</p>
+    <div class="progress"><span id="progressbar"></span></div>
+    <p><b id="progresslabel">0 de 15 concluídas</b></p>
+    <div class="checklist"><label class="check-row"><input type="checkbox" data-key="res-0"><span class="custom-check"></span><span class="check-text"><b>Voos internacionais</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-1"><span class="custom-check"></span><span class="check-text"><b>Hotel Salzburg</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-2"><span class="custom-check"></span><span class="check-text"><b>Hotel Viena</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-3"><span class="custom-check"></span><span class="check-text"><b>Hotel Londres</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-4"><span class="custom-check"></span><span class="check-text"><b>Wiener Staatsoper 25/12</b><small>Altíssima</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-5"><span class="custom-check"></span><span class="check-text"><b>Harry Potter Studios 29/12</b><small>Altíssima</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-6"><span class="custom-check"></span><span class="check-text"><b>Cursed Child 01/01 · 17h00</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-7"><span class="custom-check"></span><span class="check-text"><b>Les Misérables 28/12 · 19h30</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-8"><span class="custom-check"></span><span class="check-text"><b>Fogos oficiais 31/12</b><small>Altíssima</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-9"><span class="custom-check"></span><span class="check-text"><b>Voo VIE → LHR</b><small>Alta</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-10"><span class="custom-check"></span><span class="check-text"><b>Carro Salzburg 21–22/12</b><small>Média</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-11"><span class="custom-check"></span><span class="check-text"><b>Railjet Salzburg → Viena</b><small>Média</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-12"><span class="custom-check"></span><span class="check-text"><b>Schönbrunn</b><small>Média</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-13"><span class="custom-check"></span><span class="check-text"><b>Belvedere</b><small>Média</small></span></label>
+<label class="check-row"><input type="checkbox" data-key="res-14"><span class="custom-check"></span><span class="check-text"><b>Voo de volta LHR → GRU · 02/01</b><small>Altíssima</small></span></label></div>
+
+    <h2 class="section-title">Ordem recomendada</h2>
+    <div class="cards">
+      <div class="card"><h3>1 · Ingressos críticos</h3><p>Ópera 25/12, Les Misérables 28/12, Harry Potter Studios 29/12, Cursed Child 01/01 e fogos do Réveillon.</p></div>
+      <div class="card"><h3>2 · Hotéis</h3><p>Principalmente Londres. Em 30/12, o quarto precisa funcionar bem como home office.</p></div>
+      <div class="card"><h3>3 · Aéreos</h3><p>Open jaw GRU→MUC / LHR→GRU com provisão de R$15 mil o casal; ida obrigatoriamente noturna após o trabalho; depois VIE→LHR.</p></div>
+      <div class="card"><h3>4 · Logística interna</h3><p>Carro Salzburg 21–22/12, Railjet Salzburg→Viena e ingressos de atrações.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" id="orcamento">
+    <h2 class="section-title">Orçamento · meta R$ 50 mil</h2>
+    <p class="section-sub">Versão recalibrada: bons hotéis 3★/boutique/aparthotel, assentos intermediários, alimentação equilibrada e foco nas experiências essenciais.</p>
+    <div class="budget-goal"><b>Regra V5:</b> provisão de <b>R$15 mil para os voos internacionais</b> por causa da exigência de saída noturna. Compensamos com metas de hotel de ~€130 Salzburg, ~€140 Viena e ~£160 Londres. Objetivo: manter o total com 4% de contingência abaixo de R$50 mil.</div>
+    <div class="fx-grid">
+      <div class="fx-card"><b>EUR → BRL</b><input id="fxeur" type="number" step="0.01" value="5.91"></div>
+      <div class="fx-card"><b>GBP → BRL</b><input id="fxgbp" type="number" step="0.01" value="6.89"></div>
+      <div class="fx-card"><b>Contingência</b><input id="cont" type="number" step="1" value="4"><small>% sobre o total-base</small></div>
+    </div>
+    <div class="total-box">
+      <div><small>Total-base estimado</small><b id="basetotal">—</b></div>
+      <div style="text-align:right"><small>Com contingência</small><b id="grandtotal">—</b><small>Meta máxima: R$ 50.000</small></div>
+    </div>
+    <div class="budget-wrap">
+      <table class="budget-table">
+        <thead><tr><th>Categoria</th><th>Moeda</th><th>Valor</th><th>Premissa</th></tr></thead>
+        <tbody>
+<tr><td>Voos internacionais</td><td>BRL</td><td><input class="budget-input" data-cur="BRL" type="number" step="0.01" value="15000"></td><td>LH505 noturno na ida + retorno direto/competitivo · casal</td></tr>
+<tr><td>Hospedagem Salzburg</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="520"></td><td>4 noites · meta ~€130/noite</td></tr>
+<tr><td>Hospedagem Viena</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="560"></td><td>4 noites · meta ~€140/noite</td></tr>
+<tr><td>Hospedagem Londres</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="960"></td><td>6 noites · meta ~£160/noite</td></tr>
+<tr><td>MUC → Salzburg</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="80"></td><td>trem, casal</td></tr>
+<tr><td>Carro + seguro + combustível + parking</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="330"></td><td>2 dias · meta</td></tr>
+<tr><td>Salzburg → Viena</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="90"></td><td>Railjet, casal</td></tr>
+<tr><td>Viena urbano + aeroporto</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="80"></td><td>estimativa</td></tr>
+<tr><td>Viena → Londres</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="280"></td><td>voo direto + bagagem · meta</td></tr>
+<tr><td>Londres transporte</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="140"></td><td>urbano + Heathrow</td></tr>
+<tr><td>Fortaleza Hohensalzburg</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="38.4"></td><td>2 adultos</td></tr>
+<tr><td>Kitzsteinhorn</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="122"></td><td>2 adultos</td></tr>
+<tr><td>Hallstatt Skywalk</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="58"></td><td>2 adultos · opcional se clima ruim</td></tr>
+<tr><td>Schönbrunn</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="84"></td><td>2 adultos</td></tr>
+<tr><td>Belvedere</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="46"></td><td>2 adultos</td></tr>
+<tr><td>Ópera em Viena</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="140"></td><td>2 assentos intermediários</td></tr>
+<tr><td>Harry Potter Studios</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="150"></td><td>2 ingressos + transporte por trem</td></tr>
+<tr><td>Cursed Child</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="120"></td><td>2 ingressos · categoria intermediária</td></tr>
+<tr><td>Réveillon oficial</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="120"></td><td>2 ingressos · provisão</td></tr>
+<tr><td>Les Misérables</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="120"></td><td>2 ingressos · categoria intermediária</td></tr>
+<tr><td>Alimentação Áustria</td><td>EUR</td><td><input class="budget-input" data-cur="EUR" type="number" step="0.01" value="570"></td><td>8 dias · média controlada + ceia</td></tr>
+<tr><td>Alimentação Londres</td><td>GBP</td><td><input class="budget-input" data-cur="GBP" type="number" step="0.01" value="420"></td><td>6 dias · ~£70/dia casal</td></tr>
+<tr><td>Seguro + eSIM</td><td>BRL</td><td><input class="budget-input" data-cur="BRL" type="number" step="0.01" value="800"></td><td>casal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="budget-status">
+    <h2 class="section-title">Status da meta financeira</h2>
+    <div class="budget-goal"><b>Cenário-base V5:</b> aproximadamente <b>R$47,5 mil</b> antes da contingência e <b>R$49,4 mil</b> com 4% de contingência, já usando <b>R$15 mil</b> para os voos internacionais. Com aéreo em R$15,5 mil, a projeção fica praticamente no teto de <b>R$50 mil</b>.</div>
+  </section>
+
+  <section class="panel" id="mapas">
+    <h2 class="section-title">Mapas rápidos</h2>
+    <p class="section-sub">Links diretos para as rotas mais importantes. Todos abrem no Google Maps.</p>
+    <div class="map-grid">
+      <div class="map-card"><h3>🏔️ Kitzsteinhorn + Zell am See</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Salzburg,+Austria&destination=Salzburg,+Austria&waypoints=Kitzsteinhorn,+Kaprun,+Austria%7CZell+am+See,+Austria&travelmode=driving">Abrir rota</a></div>
+      <div class="map-card"><h3>🏞️ Wolfgangsee + Hallstatt + Gosausee</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Salzburg,+Austria&destination=Salzburg,+Austria&waypoints=St.+Gilgen,+Austria%7CHallstatt,+Austria%7CVorderer+Gosausee,+Austria&travelmode=driving">Abrir rota</a></div>
+      <div class="map-card"><h3>🚆 Salzburg → Viena</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Salzburg+Hbf&destination=Wien+Hauptbahnhof&travelmode=transit">Abrir rota</a></div>
+      <div class="map-card"><h3>🎄 Viena natalina</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Schloss+Sch%C3%B6nbrunn,+Vienna&destination=Rathausplatz,+Vienna&waypoints=St.+Stephen%27s+Cathedral,+Vienna&travelmode=transit">Abrir rota</a></div>
+      <div class="map-card"><h3>⚡ Londres → Harry Potter Studios</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Tottenham+Court+Road,+London&destination=Warner+Bros.+Studio+Tour+London&travelmode=transit">Abrir rota</a></div>
+      <div class="map-card"><h3>🎭 Les Misérables · Sondheim</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Sondheim+Theatre+London">Abrir mapa</a></div><div class="map-card"><h3>⚡ Cursed Child · Palace</h3><a class="mapbtn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Palace+Theatre+London">Abrir mapa</a></div>
+    </div>
+  </section>
+
+  <nav class="mobile-bottom-nav" aria-label="Navegação principal mobile">
+    <button class="mobile-nav-btn active" data-mobile-tab="roteiro"><span>🗓️</span>Hoje</button>
+    <button class="mobile-nav-btn" data-mobile-tab="voos"><span>✈️</span>Voos</button>
+    <button class="mobile-nav-btn" data-mobile-tab="reservas"><span>✅</span>Reservas</button>
+    <button class="mobile-nav-btn" data-mobile-tab="orcamento"><span>💰</span>Custos</button>
+    <button class="mobile-nav-btn" data-mobile-tab="mapas"><span>📍</span>Mapas</button>
+  </nav>
+
+  <footer class="footer">
+    Roteiro-base com meta de R$50 mil para o casal. Horários e referências de tarifa consultados em setembro/2026; preços e operação devem ser reconfirmados no momento da reserva. · App V5.1
+  </footer>
 </div>
-</header>
-<div class="nav">
-<div class="tabs">
-<button class="tab active" data-tab="roteiro">🗓️ Roteiro</button>
-<button class="tab" data-tab="reservas">✅ Reservas</button>
-<button class="tab" data-tab="orcamento">💰 Orçamento</button>
-<button class="tab" data-tab="mapas">📍 Mapas</button>
-</div>
-</div>
-<section class="panel active" id="roteiro">
-<h2 class="section-title">Visão geral</h2>
-<p class="section-sub">Três bases, poucos check-ins e dias alpinos flexíveis conforme meteorologia.</p>
-<div class="route" id="routeGrid"></div>
-<h2 class="section-title">Dia a dia</h2>
-<div aria-label="Navegação do dia" class="mobile-toolbar">
-<div class="mobile-day-summary"><small id="mobileDate">—</small><b id="mobileTitle">Selecione um dia</b></div>
-<button class="mini-btn today" id="todayBtn" type="button">Hoje</button>
-<div style="display:flex;gap:6px"><button aria-label="Dia anterior" class="mini-btn" id="prevDay" type="button">‹</button><button aria-label="Próximo dia" class="mini-btn" id="nextDay" type="button">›</button></div>
-</div>
-<div class="daychips" id="daychips"></div><div id="dayCards"></div>
 
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+const mobileTabs=[...document.querySelectorAll('.mobile-nav-btn')];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</section>
-<section class="panel" id="reservas">
-<h2 class="section-title">Reservas prioritárias</h2>
-<p class="section-sub">O checklist fica salvo neste navegador. Marque conforme cada item for reservado.</p>
-<div class="progress"><span id="progressbar"></span></div>
-<p><b id="progresslabel">0 de 15 concluídas</b></p>
-<div class="checklist" id="reservationChecklist"></div>
-<h2 class="section-title">Ordem recomendada</h2>
-<div class="cards">
-<div class="card"><h3>1 · Ingressos críticos</h3><p>Ópera 25/12, Harry Potter Studios, Cursed Child, Les Misérables e fogos do Réveillon.</p></div>
-<div class="card"><h3>2 · Hotéis</h3><p>Principalmente Londres. Em 30/12, o quarto precisa funcionar bem como home office.</p></div>
-<div class="card"><h3>3 · Aéreos</h3><p>Open jaw GRU→MUC / LHR→GRU e depois VIE→LHR.</p></div>
-<div class="card"><h3>4 · Logística interna</h3><p>Carro Salzburg 21–22/12, Railjet Salzburg→Viena e ingressos de atrações.</p></div>
-</div>
-</section>
-<section class="panel" id="orcamento">
-<h2 class="section-title">Orçamento dinâmico</h2>
-<p class="section-sub">Edite os valores e o câmbio. O total em reais é recalculado automaticamente.</p>
-<div class="fx-grid">
-<div class="fx-card"><b>EUR → BRL</b><input id="fxeur" step="0.01" type="number" value="5.90668"/></div>
-<div class="fx-card"><b>GBP → BRL</b><input id="fxgbp" step="0.01" type="number" value="6.88786"/></div>
-<div class="fx-card"><b>Contingência</b><input id="cont" step="1" type="number" value="10"/><small>% sobre o total-base</small></div>
-</div>
-<div class="total-box">
-<div><small>Total-base estimado</small><b id="basetotal">—</b></div>
-<div style="text-align:right"><small>Com contingência</small><b id="grandtotal">—</b></div>
-</div>
-<div class="budget-wrap">
-<table class="budget-table">
-<thead><tr><th>Categoria</th><th>Moeda</th><th>Valor</th><th>Premissa</th></tr></thead>
-<tbody id="budgetRows"></tbody>
-</table>
-</div>
-</section>
-<section class="panel" id="mapas">
-<h2 class="section-title">Mapas rápidos</h2>
-<p class="section-sub">Links diretos para as rotas mais importantes. Todos abrem no Google Maps.</p>
-<div class="map-grid" id="mapGrid"></div>
-</section>
-<nav aria-label="Navegação principal mobile" class="mobile-bottom-nav">
-<button class="mobile-nav-btn active" data-mobile-tab="roteiro"><span>🗓️</span>Hoje</button>
-<button class="mobile-nav-btn" data-mobile-tab="reservas"><span>✅</span>Reservas</button>
-<button class="mobile-nav-btn" data-mobile-tab="orcamento"><span>💰</span>Custos</button>
-<button class="mobile-nav-btn" data-mobile-tab="mapas"><span>📍</span>Mapas</button>
-</nav>
-<footer class="footer">Roteiro-base de planejamento. Horários e preços devem ser reconfirmados no momento da reserva. <span id="footerVersion"></span></footer>
-</div>
-
-
-<div class="update-toast" id="updateToast" role="status"><b>Nova versão do roteiro disponível.</b><button id="applyUpdateBtn" type="button">Atualizar agora</button></div>
-<div aria-hidden="true" class="install-modal" id="installModal"><div class="install-sheet"><h3>Instalar Áustria + Londres</h3><p id="installIntro">Adicione o roteiro à tela inicial para abrir em tela cheia e usar o conteúdo mesmo sem internet.</p><ol class="install-steps" id="installSteps"></ol><button class="btn secondary close-install" id="closeInstallBtn" type="button">Fechar</button></div></div>
-<script src="./trip-data.js"></script><script>
-const DATA=window.TRIP_DATA;
-const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-function esc(s=''){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function render(){
-  $('#versionBadge').textContent=`Versão ${DATA.version}`;
-  $('#footerVersion').textContent=`Versão ${DATA.version} · atualizado em ${new Date(DATA.updatedAt+'T12:00:00').toLocaleDateString('pt-BR')}`;
-  $('#routeGrid').innerHTML=DATA.route.map(x=>`<div class="route-card"><h3>${esc(x.title)}</h3><p>${esc(x.description)}</p></div>`).join('');
-  $('#daychips').innerHTML=DATA.days.map((d,i)=>`<button class="daychip" data-target="day-${i}" data-index="${i}"><b>${esc(d.date)}</b><span>${esc(d.title.replace(/^\S+\s*/,''))}</span></button>`).join('');
-  $('#dayCards').innerHTML=DATA.days.map((d,i)=>`<article class="day-card" id="day-${i}" data-day="${i}" data-date="${esc(d.isoDate||'')}"><div class="day-head"><div class="date-box"><span>${esc(d.date)}</span><small>${esc(d.weekday)}</small></div><div class="day-title"><h3>${esc(d.title)}</h3>${d.pill?`<span class="pill">${esc(d.pill)}</span>`:''}<p>${esc(d.summary)}</p></div></div><div class="day-grid"><div><table class="schedule"><tbody>${d.schedule.map(s=>`<tr><td class="time">${esc(s.time)}</td><td><strong>${esc(s.title)}</strong>${s.detail?`<div>${esc(s.detail)}</div>`:''}</td></tr>`).join('')}</tbody></table></div><aside class="day-aside"><h4>Mapas</h4><div class="maplinks">${d.maps.map(m=>`<a class="mapbtn" target="_blank" rel="noopener" href="${esc(m.url)}">${esc(m.label)}</a>`).join('')}</div>${d.note?`<h4>Nota</h4><p>${esc(d.note)}</p>`:''}</aside></div></article>`).join('');
-  $('#reservationChecklist').innerHTML=DATA.reservations.map(r=>`<label class="check-row"><input type="checkbox" data-key="${esc(r.key)}"><span class="custom-check"></span><span class="check-text"><b>${esc(r.label)}</b><small>${esc(r.priority)}</small></span></label>`).join('');
-  $('#budgetRows').innerHTML=DATA.budget.map(b=>`<tr><td>${esc(b.label)}</td><td>${esc(b.currency)}</td><td><input class="budget-input" data-key="${esc(b.key)}" data-cur="${esc(b.currency)}" type="number" step="0.01" value="${b.value}"></td><td>${esc(b.note)}</td></tr>`).join('');
-  $('#mapGrid').innerHTML=DATA.maps.map(m=>`<div class="map-card"><h3>${esc(m.title)}</h3><a class="mapbtn" target="_blank" rel="noopener" href="${esc(m.url)}">${esc(m.label)}</a></div>`).join('');
+function activatePanel(id, smooth=true){
+  tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
+  mobileTabs.forEach(x=>x.classList.toggle('active',x.dataset.mobileTab===id));
+  panels.forEach(x=>x.classList.toggle('active',x.id===id));
+  if(smooth) window.scrollTo({top:0,behavior:'smooth'});
 }
-render();
+tabs.forEach(t=>t.addEventListener('click',()=>activatePanel(t.dataset.tab)));
+mobileTabs.forEach(t=>t.addEventListener('click',()=>activatePanel(t.dataset.mobileTab)));
 
-const tabs=$$('.tab'), panels=$$('.panel'), mobileTabs=$$('.mobile-nav-btn');
-function activatePanel(id,smooth=true){tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));mobileTabs.forEach(x=>x.classList.toggle('active',x.dataset.mobileTab===id));panels.forEach(x=>x.classList.toggle('active',x.id===id));if(smooth)window.scrollTo({top:0,behavior:'smooth'});}
-tabs.forEach(t=>t.addEventListener('click',()=>activatePanel(t.dataset.tab))); mobileTabs.forEach(t=>t.addEventListener('click',()=>activatePanel(t.dataset.mobileTab)));
+const dateMap=['2026-12-18','2026-12-19','2026-12-20','2026-12-21','2026-12-22','2026-12-23','2026-12-24','2026-12-25','2026-12-26','2026-12-27','2026-12-28','2026-12-29','2026-12-30','2026-12-31','2027-01-01','2027-01-02','2027-01-03'];
+const days=[...document.querySelectorAll('.day-card')];
+const daychips=[...document.querySelectorAll('.daychip')];
+days.forEach((d,i)=>d.dataset.date=dateMap[i]);
+let selectedDay=0;
 
-const dateMap=DATA.days.map(d=>d.isoDate), days=$$('.day-card'), daychips=$$('.daychip'); let selectedDay=0;
-function localYMD(){const d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
-function suggestedDay(){const now=localYMD(),exact=dateMap.indexOf(now);if(exact>=0)return exact;if(now<dateMap[0])return 0;if(now>dateMap.at(-1))return dateMap.length-1;const f=dateMap.findIndex(d=>d>now);return f>=0?f:0}
-function updateMobileSummary(){const card=days[selectedDay];if(!card)return;$('#mobileDate').textContent=`${$('.date-box span',card)?.textContent||''} · ${$('.date-box small',card)?.textContent||''}`;$('#mobileTitle').textContent=($('.day-title h3',card)?.textContent||'').replace(/^\S+\s*/,'')}
-function selectDay(index,{scroll=true}={}){selectedDay=Math.max(0,Math.min(days.length-1,index));days.forEach((d,i)=>d.classList.toggle('selected',i===selectedDay));daychips.forEach((c,i)=>c.classList.toggle('selected',i===selectedDay));updateMobileSummary();safeSet('trip-selected-day',String(selectedDay));daychips[selectedDay]?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});if(scroll&&matchMedia('(max-width:700px)').matches){$('.mobile-toolbar')?.scrollIntoView({behavior:'smooth',block:'start'})}else if(scroll){days[selectedDay]?.scrollIntoView({behavior:'smooth',block:'start'})}}
-daychips.forEach((b,i)=>b.addEventListener('click',()=>selectDay(i))); $('#prevDay')?.addEventListener('click',()=>selectDay(selectedDay-1)); $('#nextDay')?.addEventListener('click',()=>selectDay(selectedDay+1)); $('#todayBtn')?.addEventListener('click',()=>selectDay(suggestedDay()));
-function applyMobileMode(){document.body.classList.toggle('mobile-single',matchMedia('(max-width:700px)').matches)} addEventListener('resize',applyMobileMode,{passive:true});applyMobileMode();
-function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}} function safeSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-const rememberedDay=parseInt(safeGet('trip-selected-day'),10);selectDay(Number.isInteger(rememberedDay)&&dateMap.indexOf(localYMD())<0?rememberedDay:suggestedDay(),{scroll:false});
-const rememberedPanel=safeGet('trip-active-panel');if(rememberedPanel&&$('#'+rememberedPanel))activatePanel(rememberedPanel,false);[...tabs,...mobileTabs].forEach(el=>el.addEventListener('click',()=>safeSet('trip-active-panel',el.dataset.tab||el.dataset.mobileTab)));
+function localYMD(){
+  const d=new Date();
+  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function suggestedDay(){
+  const now=localYMD();
+  const exact=dateMap.indexOf(now);
+  if(exact>=0) return exact;
+  if(now<dateMap[0]) return 0;
+  if(now>dateMap[dateMap.length-1]) return dateMap.length-1;
+  const future=dateMap.findIndex(d=>d>now);
+  return future>=0?future:0;
+}
+function updateMobileSummary(){
+  const card=days[selectedDay];
+  const date=card.querySelector('.date-box span')?.textContent||'';
+  const weekday=card.querySelector('.date-box small')?.textContent||'';
+  const title=card.querySelector('.day-title h3')?.textContent||'';
+  const md=document.getElementById('mobileDate'), mt=document.getElementById('mobileTitle');
+  if(md) md.textContent=`${date} · ${weekday}`;
+  if(mt) mt.textContent=title.replace(/^\S+\s*/,'');
+}
+function selectDay(index,{scroll=true}={}){
+  selectedDay=Math.max(0,Math.min(days.length-1,index));
+  days.forEach((d,i)=>d.classList.toggle('selected',i===selectedDay));
+  daychips.forEach((c,i)=>c.classList.toggle('selected',i===selectedDay));
+  updateMobileSummary();
+  const chip=daychips[selectedDay];
+  if(chip) chip.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  if(scroll && window.matchMedia('(max-width:700px)').matches){
+    const toolbar=document.querySelector('.mobile-toolbar');
+    if(toolbar) toolbar.scrollIntoView({behavior:'smooth',block:'start'});
+  } else if(scroll) {
+    days[selectedDay].scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+daychips.forEach((btn,i)=>btn.addEventListener('click',()=>selectDay(i)));
+document.getElementById('prevDay')?.addEventListener('click',()=>selectDay(selectedDay-1));
+document.getElementById('nextDay')?.addEventListener('click',()=>selectDay(selectedDay+1));
+document.getElementById('todayBtn')?.addEventListener('click',()=>selectDay(suggestedDay()));
 
-const checks=$$('.check-row input');function updateProgress(){let done=0;checks.forEach(c=>{const v=safeGet(c.dataset.key)==='1';c.checked=v;if(v)done++});$('#progressbar').style.width=(checks.length?done/checks.length*100:0)+'%';$('#progresslabel').textContent=`${done} de ${checks.length} concluídas`;} checks.forEach(c=>c.addEventListener('change',()=>{safeSet(c.dataset.key,c.checked?'1':'0');updateProgress()}));updateProgress();
-const eur=$('#fxeur'),gbp=$('#fxgbp'),cont=$('#cont'),budgetInputs=$$('.budget-input');
-function restoreInput(el,key,def){const v=safeGet(key);if(v!==null)el.value=v;else el.value=def}
-restoreInput(eur,'fx-eur',DATA.fx.EUR);restoreInput(gbp,'fx-gbp',DATA.fx.GBP);restoreInput(cont,'fx-cont',DATA.fx.contingencyPct);budgetInputs.forEach(i=>restoreInput(i,'budget-'+i.dataset.key,i.value));
-function money(v){return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(v)} function recalc(){let total=0;budgetInputs.forEach(i=>{const v=parseFloat(i.value||0),cur=i.dataset.cur;total+=cur==='EUR'?v*parseFloat(eur.value||0):cur==='GBP'?v*parseFloat(gbp.value||0):v});const grand=total*(1+parseFloat(cont.value||0)/100);$('#basetotal').textContent=money(total);$('#grandtotal').textContent=money(grand)}
-eur.addEventListener('input',()=>{safeSet('fx-eur',eur.value);recalc()});gbp.addEventListener('input',()=>{safeSet('fx-gbp',gbp.value);recalc()});cont.addEventListener('input',()=>{safeSet('fx-cont',cont.value);recalc()});budgetInputs.forEach(i=>i.addEventListener('input',()=>{safeSet('budget-'+i.dataset.key,i.value);recalc()}));recalc();
+function applyMobileMode(){
+  const mobile=window.matchMedia('(max-width:700px)').matches;
+  document.body.classList.toggle('mobile-single',mobile);
+}
+window.addEventListener('resize',applyMobileMode,{passive:true});
+applyMobileMode();
+selectDay(suggestedDay(),{scroll:false});
 
-// Connectivity indicator
-function connection(){const offline=!navigator.onLine,b=$('#connectionBadge');b.classList.toggle('offline',offline);$('#connectionText').textContent=offline?'Offline · roteiro disponível':'Online'}addEventListener('online',connection);addEventListener('offline',connection);connection();
+const checks=[...document.querySelectorAll('.check-row input')];
+function safeGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function safeSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function updateProgress(){
+  let done=0;
+  checks.forEach(c=>{ const v=safeGet(c.dataset.key)==='1'; c.checked=v; if(v) done++; });
+  document.getElementById('progressbar').style.width=(done/checks.length*100)+'%';
+  document.getElementById('progresslabel').textContent=`${done} de ${checks.length} concluídas`;
+}
+checks.forEach(c=>c.addEventListener('change',()=>{safeSet(c.dataset.key,c.checked?'1':'0');updateProgress();}));
+updateProgress();
 
-// Install experience
-let deferredPrompt=null;const installBtn=$('#installAppBtn'),modal=$('#installModal'),steps=$('#installSteps');const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;const isiOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-function showInstallHelp(){steps.innerHTML=isiOS?'<li>Abra esta página no <b>Safari</b>.</li><li>Toque em <b>Compartilhar</b> (quadrado com seta).</li><li>Escolha <b>Adicionar à Tela de Início</b>.</li><li>Confirme em <b>Adicionar</b>.</li>':'<li>Abra o menu do navegador.</li><li>Escolha <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.</li><li>Confirme a instalação.</li>';modal.classList.add('show');modal.setAttribute('aria-hidden','false')}
-if(!standalone) installBtn.style.display='inline-flex';addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display='inline-flex'});installBtn?.addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}else showInstallHelp()});$('#closeInstallBtn')?.addEventListener('click',()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true')});modal?.addEventListener('click',e=>{if(e.target===modal)$('#closeInstallBtn').click()});
+const eur=document.getElementById('fxeur'), gbp=document.getElementById('fxgbp'), cont=document.getElementById('cont');
+const budgetInputs=[...document.querySelectorAll('.budget-input')];
+function money(v){return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(v)}
+function recalc(){
+  let total=0;
+  budgetInputs.forEach(i=>{
+    const v=parseFloat(i.value||0), cur=i.dataset.cur;
+    total += cur==='EUR'?v*parseFloat(eur.value||0):cur==='GBP'?v*parseFloat(gbp.value||0):v;
+  });
+  const grand=total*(1+parseFloat(cont.value||0)/100);
+  document.getElementById('basetotal').textContent=money(total);
+  document.getElementById('grandtotal').textContent=money(grand);
+}
+[eur,gbp,cont,...budgetInputs].forEach(i=>i.addEventListener('input',recalc));
+recalc();
 
-// Service-worker update flow: new version waits until the traveler chooses to refresh.
-let swReg=null;function showUpdate(){ $('#updateToast')?.classList.add('show') }
-if('serviceWorker'in navigator){addEventListener('load',async()=>{try{swReg=await navigator.serviceWorker.register('./sw.js');if(swReg.waiting)showUpdate();swReg.addEventListener('updatefound',()=>{const w=swReg.installing;w?.addEventListener('statechange',()=>{if(w.state==='installed'&&navigator.serviceWorker.controller)showUpdate()})});setTimeout(()=>swReg.update().catch(()=>{}),2500)}catch(e){console.warn('SW',e)}});navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload())}
-$('#applyUpdateBtn')?.addEventListener('click',()=>{if(swReg?.waiting)swReg.waiting.postMessage({type:'SKIP_WAITING'});else location.reload()});
-</script></body>
+// Restore the last section/day on mobile if available.
+const rememberedPanel=safeGet('trip-active-panel');
+if(rememberedPanel && document.getElementById(rememberedPanel)) activatePanel(rememberedPanel,false);
+[...tabs,...mobileTabs].forEach(el=>el.addEventListener('click',()=>safeSet('trip-active-panel',el.dataset.tab||el.dataset.mobileTab)));
+daychips.forEach((btn,i)=>btn.addEventListener('click',()=>safeSet('trip-selected-day',String(i))));
+const rememberedDay=parseInt(safeGet('trip-selected-day'),10);
+if(Number.isInteger(rememberedDay) && rememberedDay>=0 && rememberedDay<days.length && dateMap.indexOf(localYMD())<0) selectDay(rememberedDay,{scroll:false});
+</script>
+
+<script>
+// PWA: força verificação da versão publicada a cada abertura online.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
+      await reg.update().catch(() => {});
+    } catch (e) { console.warn('Service worker:', e); }
+  });
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!reloading) { reloading = true; location.reload(); }
+  });
+}
+</script>
+
+</body>
 </html>
